@@ -46,6 +46,7 @@
             this.pictureBoxExcel = new System.Windows.Forms.PictureBox();
             this.labelExcelFile = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnReimport = new System.Windows.Forms.Button();
             this.comboBoxLowcase = new System.Windows.Forms.ComboBox();
             this.comboBoxHeader = new System.Windows.Forms.ComboBox();
             this.comboBoxEncoding = new System.Windows.Forms.ComboBox();
@@ -55,7 +56,7 @@
             this.tabPageSQL = new System.Windows.Forms.TabPage();
             this.tabPageCode = new System.Windows.Forms.TabPage();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.btnReimport = new System.Windows.Forms.Button();
+            this.tabPageTS = new System.Windows.Forms.TabPage();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -293,7 +294,7 @@
             // 
             // labelExcelFile
             // 
-            this.labelExcelFile.Font = new System.Drawing.Font("Microsoft YaHei", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelExcelFile.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelExcelFile.Location = new System.Drawing.Point(3, 106);
             this.labelExcelFile.Name = "labelExcelFile";
             this.labelExcelFile.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -321,6 +322,16 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
+            // 
+            // btnReimport
+            // 
+            this.btnReimport.Location = new System.Drawing.Point(89, 171);
+            this.btnReimport.Name = "btnReimport";
+            this.btnReimport.Size = new System.Drawing.Size(75, 23);
+            this.btnReimport.TabIndex = 7;
+            this.btnReimport.Text = "Reimport";
+            this.btnReimport.UseVisualStyleBackColor = true;
+            this.btnReimport.Click += new System.EventHandler(this.btnReimport_Click);
             // 
             // comboBoxLowcase
             // 
@@ -382,6 +393,7 @@
             this.tabControlCode.Controls.Add(this.tabPageJSON);
             this.tabControlCode.Controls.Add(this.tabPageSQL);
             this.tabControlCode.Controls.Add(this.tabPageCode);
+            this.tabControlCode.Controls.Add(this.tabPageTS);
             this.tabControlCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlCode.Location = new System.Drawing.Point(0, 0);
             this.tabControlCode.Name = "tabControlCode";
@@ -424,15 +436,15 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
-            // btnReimport
+            // tabPageTS
             // 
-            this.btnReimport.Location = new System.Drawing.Point(89, 171);
-            this.btnReimport.Name = "btnReimport";
-            this.btnReimport.Size = new System.Drawing.Size(75, 23);
-            this.btnReimport.TabIndex = 7;
-            this.btnReimport.Text = "Reimport";
-            this.btnReimport.UseVisualStyleBackColor = true;
-            this.btnReimport.Click += new System.EventHandler(this.btnReimport_Click);
+            this.tabPageTS.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTS.Name = "tabPageTS";
+            this.tabPageTS.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTS.Size = new System.Drawing.Size(509, 464);
+            this.tabPageTS.TabIndex = 3;
+            this.tabPageTS.Text = "TypeScript";
+            this.tabPageTS.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -496,5 +508,6 @@
         private System.Windows.Forms.ToolStripButton btnSaveJson;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnReimport;
+        private System.Windows.Forms.TabPage tabPageTS;
     }
 }

@@ -13,6 +13,7 @@ namespace excel2json {
                 this.Encoding = "utf8-nobom";
                 this.Lowcase = false;
                 this.ExportArray = false;
+                this.EsacapeNonAscii = true;
             }
 
             [Option('e', "excel", Required = true, HelpText = "input excel file path.")]
@@ -62,6 +63,12 @@ namespace excel2json {
                 get;
                 set;
             }
+            [Option('u', "array", Required = false, DefaultValue = true, HelpText = "export with \\u")]
+            public bool EsacapeNonAscii
+            {
+                get;set;
+            }
+        
         }
     }
 }

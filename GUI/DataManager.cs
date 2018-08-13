@@ -4,13 +4,15 @@ using System.Data;
 using System.IO;
 using System.Text;
 
-namespace excel2json.GUI {
+namespace excel2json.GUI
+{
 
     /// <summary>
     /// 为GUI模式提供的整体数据管理
     /// </summary>
-    class DataManager {
-      
+    class DataManager
+    {
+
         // 数据导入设置
         private Program.Options mOptions;
         private Encoding mEncoding;
@@ -19,12 +21,15 @@ namespace excel2json.GUI {
         private JsonExporter mJson;
         private SQLExporter mSQL;
         private CSDefineGenerator mCSharp;
+        private TSDefineGenerator mTS;
 
         /// <summary>
         /// 导出的Json文本
         /// </summary>
-        public string JsonContext {
-            get {
+        public string JsonContext
+        {
+            get
+            {
                 if (mJson != null)
                     return mJson.context;
                 else
@@ -35,8 +40,10 @@ namespace excel2json.GUI {
         /// <summary>
         /// 导出的SQL文本
         /// </summary>
-        public string SQLContext {
-            get {
+        public string SQLContext
+        {
+            get
+            {
                 if (mSQL != null)
                     return mSQL.structSQL + mSQL.contentSQL;
                 else
@@ -47,10 +54,23 @@ namespace excel2json.GUI {
         /// <summary>
         /// 导出的C#代码
         /// </summary>
-        public string CSharpCode {
-            get {
+        public string CSharpCode
+        {
+            get
+            {
                 if (mCSharp != null)
                     return mCSharp.code;
+                else
+                    return "";
+            }
+        }
+
+        public string TypeScriptCode
+        {
+            get
+            {
+                if (mTS != null)
+                    return mTS.code;
                 else
                     return "";
             }
@@ -60,8 +80,10 @@ namespace excel2json.GUI {
         /// 保存Json
         /// </summary>
         /// <param name="filePath">保存路径</param>
-        public void saveJson(string filePath) {
-            if (mJson != null) {
+        public void saveJson(string filePath)
+        {
+            if (mJson != null)
+            {
                 mJson.SaveToFile(filePath, mEncoding);
             }
         }
@@ -70,8 +92,10 @@ namespace excel2json.GUI {
         /// 保存SQL
         /// </summary>
         /// <param name="filePath">保存路径</param>
-        public void saveSQL(string filePath) {
-            if (mSQL != null) {
+        public void saveSQL(string filePath)
+        {
+            if (mSQL != null)
+            {
                 mSQL.SaveToFile(filePath, mEncoding);
             }
         }
@@ -80,8 +104,10 @@ namespace excel2json.GUI {
         /// 保存C#代码
         /// </summary>
         /// <param name="filePath">保存路径</param>
-        public void saveCode(string filePath) {
-            if (mCSharp != null) {
+        public void saveCode(string filePath)
+        {
+            if (mCSharp != null)
+            {
                 mCSharp.SaveToFile(filePath, mEncoding);
             }
         }
@@ -90,14 +116,16 @@ namespace excel2json.GUI {
         /// 加载Excel文件
         /// </summary>
         /// <param name="options">导入设置</param>
-        public void loadExcel(Program.Options options) {
+        public void loadExcel(Program.Options options)
+        {
             mOptions = options;
             string excelPath = options.ExcelPath;
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
             int header = options.HeaderRows;
 
             // 加载Excel文件
-            using (FileStream excelFile = File.Open(excelPath, FileMode.Open, FileAccess.Read)) {
+            using (FileStream excelFile = File.Open(excelPath, FileMode.Open, FileAccess.Read))
+            {
                 // Reading from a OpenXml Excel file (2007 format; *.xlsx)
                 IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(excelFile);
 
@@ -106,22 +134,27 @@ namespace excel2json.GUI {
                 DataSet book = excelReader.AsDataSet();
 
                 // 数据检测
-                if (book.Tables.Count < 1) {
+                if (book.Tables.Count < 1)
+                {
                     throw new Exception("Excel file is empty: " + excelPath);
                 }
 
                 // 取得数据
                 DataTable sheet = book.Tables[0];
-                if (sheet.Rows.Count <= 0) {
+                if (sheet.Rows.Count <= 0)
+                {
                     throw new Exception("Excel Sheet is empty: " + excelPath);
                 }
 
                 //-- 确定编码
                 Encoding cd = new UTF8Encoding(false);
-                if (options.Encoding != "utf8-nobom") {
-                    foreach (EncodingInfo ei in Encoding.GetEncodings()) {
+                if (options.Encoding != "utf8-nobom")
+                {
+                    foreach (EncodingInfo ei in Encoding.GetEncodings())
+                    {
                         Encoding e = ei.GetEncoding();
-                        if (e.HeaderName == options.Encoding) {
+                        if (e.HeaderName == options.Encoding)
+                        {
                             cd = e;
                             break;
                         }
@@ -130,13 +163,19 @@ namespace excel2json.GUI {
                 mEncoding = cd;
 
                 //-- 导出JSON
-                mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
+                mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray, options.EsacapeNonAscii);
 
                 //-- 导出SQL
                 mSQL = new SQLExporter(excelName, sheet, header);
 
                 //-- 生成C#定义代码
                 mCSharp = new CSDefineGenerator(excelName, sheet);
+
+
+                //-- 生成C#定义代码
+                mTS = new TSDefineGenerator(excelName, sheet);
+
+
             }
         }
     }
