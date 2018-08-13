@@ -12,6 +12,7 @@
 * -c, –encoding (Default: utf8-nobom) 指定编码的名称.
 * -l, –lowcase (Default: false) 自动把字段名称转换成小写格式.
 * -a 序列化成数组
+* -u 序列化的时候以\u的形式保存unicode字符
 
 ![COVER](https://neil3d.github.io/assets/img/excel2json/cover.jpg)  
 
